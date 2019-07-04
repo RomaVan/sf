@@ -7,13 +7,15 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @ORM\Table(name="`user`")
  */
 class User implements UserInterface
 {
     /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
+     * @var integer
+     * @ORM\Id
+     * @ORM\Column(nullable=false)
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
@@ -32,6 +34,32 @@ class User implements UserInterface
      * @ORM\Column(type="string")
      */
     private $password;
+    /**
+     * @var string The hashed password
+     * @ORM\Column(type="string")
+     */
+    private $password2;
+
+    /**
+     * @ORM\Column(type="string", unique=true)
+     */
+    private $apiToken;
+
+    /**
+     * @return mixed
+     */
+    public function getApiToken()
+    {
+        return $this->apiToken;
+    }
+
+    /**
+     * @param mixed $apiToken
+     */
+    public function setApiToken($apiToken): void
+    {
+        $this->apiToken = $apiToken;
+    }
 
     public function getId(): ?int
     {
@@ -110,4 +138,20 @@ class User implements UserInterface
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
     }
+//
+//    /**
+//     * @return string
+//     */
+//    public function getPassword2(): string
+//    {
+//        return $this->password2;
+//    }
+//
+//    /**
+//     * @param string $password2
+//     */
+//    public function setPassword2(string $password2): void
+//    {
+//        $this->password2 = $password2;
+//    }
 }
